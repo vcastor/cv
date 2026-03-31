@@ -1,6 +1,6 @@
 SHELL     := /bin/bash
 LATEX     := lualatex
-BIBER     := biber
+BIBTEX    := bibtex
 FLAGS     := -interaction=nonstopmode -halt-on-error
 LOGDIR    := logs
 PLAIN_DIR := plain
@@ -25,12 +25,13 @@ PLAIN_PDFS := $(PLAIN_EN) $(PLAIN_ES) $(PLAIN_FR)
 ALL_PDFS   := $(COOL_PDFS) $(PLAIN_PDFS)
 
 PLAIN_DEPS := $(PLAIN_DIR)/cv_plain.tex $(PLAIN_DIR)/settings.sty \
+              unsrtnatnodoi.bst \
               $(wildcard $(PLAIN_DIR)/data/*.tex) \
               $(wildcard $(PLAIN_DIR)/data/*.bib)
 
 # ----- Cleanup helpers -----------------------------------------------------
 # Aux/ancillary files per jobname
-_aux = $(1).aux $(1).out $(1).bbl $(1).bcf $(1).blg $(1).run.xml $(1).listing
+_aux = $(1).aux $(1).out $(1).bbl $(1).blg $(1).listing
 
 # Conditionally wipe log files (skipped when LOGS=1)
 define _clean_logs
@@ -91,12 +92,13 @@ $(LIGHT_PDF): light.tex
 	  "$(LATEX) $(FLAGS) -jobname=cv_light light.tex" \
 	  "cv_light.log"
 
-# ----- Plain CVs (lualatex → biber → lualatex) ----------------------------
+# ----- Plain CVs (lualatex → bibtex → lualatex × 2) ----------------------
 $(PLAIN_EN): $(PLAIN_DEPS)
 	@mkdir -p $(LOGDIR)
 	@$(SPIN) "Plain CV [English]" "$(LOGDIR)/plain_en.log" \
 	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBER) cv_plain_en \
+	   && $(BIBTEX) cv_plain_en \
+	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}' \
 	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}'" \
 	  "cv_plain_en.log"
 
@@ -104,7 +106,8 @@ $(PLAIN_ES): $(PLAIN_DEPS)
 	@mkdir -p $(LOGDIR)
 	@$(SPIN) "Plain CV [Español]" "$(LOGDIR)/plain_es.log" \
 	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBER) cv_plain_es \
+	   && $(BIBTEX) cv_plain_es \
+	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}' \
 	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}'" \
 	  "cv_plain_es.log"
 
@@ -112,13 +115,14 @@ $(PLAIN_FR): $(PLAIN_DEPS)
 	@mkdir -p $(LOGDIR)
 	@$(SPIN) "Plain CV [Français]" "$(LOGDIR)/plain_fr.log" \
 	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBER) cv_plain_fr \
+	   && $(BIBTEX) cv_plain_fr \
+	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}' \
 	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}'" \
 	  "cv_plain_fr.log"
 
 # ----- Clean (removes everything except PDF) ---------------------------
 clean:
 	@printf "  Removing all build artefacts... "
-	@rm -f *.aux *.log *.out *.bbl *.bcf *.blg *.run.xml *.listing
+	@rm -f *.aux *.log *.out *.bbl *.blg *.listing
 	@rm -rf $(LOGDIR)
 	@printf "\033[32m✓\033[0m\n"

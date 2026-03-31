@@ -6,51 +6,15 @@
 \usepackage{settings}
 \usepackage[french,spanish,english]{babel}
 
-% --- Publications (biblatex) -----------------------------------------------
-\PassOptionsToPackage{%
-  style=numeric, sorting=ydnt, defernumbers=true, maxbibnames=99}{biblatex}
-\usepackage{biblatex}
-\addbibresource{plain/data/own-bib.bib}
-
-% No numeric labels — plain hanging list
-\defbibenvironment{bibliography}
-  {\list{}%
-    {\setlength{\leftmargin}{1.5em}%
-     \setlength{\itemindent}{-1.5em}%
-     \setlength{\itemsep}{4pt}%
-     \setlength{\parsep}{0pt}}}
-  {\endlist}
-  {\item}
-
-% Abbreviated author names: "V Castor", "J Guevara", etc.
-% \namepartgiveni = "V\bibinitperiod" or "Á\bibinitperiod \bibinitdelim M…"
-% Take everything before the first backslash → the single initial letter.
-% \namepartfamily = "Castor-Villegas" → take everything before first hyphen.
-% Uses string.char(92) for backslash and plain string.find to avoid any
-% special-character issues inside \directlua / \DeclareNameFormat.
-\DeclareNameFormat{default}{%
-  \directlua{
-    local gi = '\luaescapestring{\namepartgiveni}'
-    local ff = '\luaescapestring{\namepartfamily}'
-    local bslash = string.char(92)
-    local bpos = string.find(gi, bslash, 1, true)
-    local init = bpos and gi:sub(1, bpos - 1) or gi
-    local hpos = string.find(ff, '-', 1, true)
-    local fam  = hpos and ff:sub(1, hpos - 1) or ff
-    local out  = ''
-    if string.len(init) > 0 then out = init .. ' ' end
-    tex.sprint(out .. fam)
-  }%
-  \usebibmacro{name:andothers}%
-}
-\DeclareNameAlias{sortname}{default}
-\renewcommand*{\finalnamedelim}{\multinamedelim}
+% --- Publications (natbib + bibtex) ----------------------------------------
+\usepackage{natbib}
+\bibliographystyle{unsrtnatnodoi}
 
 % Publication section title — only ES differs from EN/FR
 \ifdefstring{\cvlang}{es}{\def\pubtitle{PUBLICACIONES}}{\def\pubtitle{PUBLICATIONS}}
 
-% Make biblatex heading look like our \section headings
-\defbibheading{cvbib}[Publications]{\section{#1}}
+% Make the bibliography heading match our \section style (no star, correct title)
+\renewcommand{\bibsection}{\section{\pubtitle}}
 
 % ---------------------------------------------------------------------------
 % Header
@@ -89,7 +53,7 @@
 \input{plain/data/education_\cvlang}
 \input{plain/data/work_\cvlang}
 \nocite{*}
-\printbibliography[heading=cvbib, title={\pubtitle}]
+\bibliography{plain/data/own-bib}
 \input{plain/data/skills_\cvlang}
 \input{plain/data/languages_\cvlang}
 
