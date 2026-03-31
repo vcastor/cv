@@ -1,0 +1,96 @@
+% Default language: en  (override on the command line with
+%   lualatex '\def\cvlang{es}\input{plain/cv_plain}'  etc.)
+\ifdefined\cvlang\else\def\cvlang{en}\fi
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{settings}
+\usepackage[french,spanish,english]{babel}
+
+% --- Publications (biblatex) -----------------------------------------------
+\PassOptionsToPackage{%
+  style=numeric, sorting=ydnt, defernumbers=true, maxbibnames=99}{biblatex}
+\usepackage{biblatex}
+\addbibresource{plain/data/own-bib.bib}
+
+% No numeric labels — plain hanging list
+\defbibenvironment{bibliography}
+  {\list{}%
+    {\setlength{\leftmargin}{1.5em}%
+     \setlength{\itemindent}{-1.5em}%
+     \setlength{\itemsep}{4pt}%
+     \setlength{\parsep}{0pt}}}
+  {\endlist}
+  {\item}
+
+% Abbreviated author names: "V Castor", "J Guevara", etc.
+% \namepartgiveni = "V\bibinitperiod" or "Á\bibinitperiod \bibinitdelim M…"
+% Take everything before the first backslash → the single initial letter.
+% \namepartfamily = "Castor-Villegas" → take everything before first hyphen.
+% Uses string.char(92) for backslash and plain string.find to avoid any
+% special-character issues inside \directlua / \DeclareNameFormat.
+\DeclareNameFormat{default}{%
+  \directlua{
+    local gi = '\luaescapestring{\namepartgiveni}'
+    local ff = '\luaescapestring{\namepartfamily}'
+    local bslash = string.char(92)
+    local bpos = string.find(gi, bslash, 1, true)
+    local init = bpos and gi:sub(1, bpos - 1) or gi
+    local hpos = string.find(ff, '-', 1, true)
+    local fam  = hpos and ff:sub(1, hpos - 1) or ff
+    local out  = ''
+    if string.len(init) > 0 then out = init .. ' ' end
+    tex.sprint(out .. fam)
+  }%
+  \usebibmacro{name:andothers}%
+}
+\DeclareNameAlias{sortname}{default}
+\renewcommand*{\finalnamedelim}{\multinamedelim}
+
+% Publication section title — only ES differs from EN/FR
+\ifdefstring{\cvlang}{es}{\def\pubtitle{PUBLICACIONES}}{\def\pubtitle{PUBLICATIONS}}
+
+% Make biblatex heading look like our \section headings
+\defbibheading{cvbib}[Publications]{\section{#1}}
+
+% ---------------------------------------------------------------------------
+% Header
+% ---------------------------------------------------------------------------
+\newcommand{\cvheader}{%
+  \begin{center}
+    {\Huge\textbf{Victoria Castor Villegas}}\\[5pt]
+    \small
+    \faEnvelope\hspace{2pt}%
+      \href{mailto:victoria.castor-villegas@univ-rouen.fr}%
+           {\texttt{victoria.castor-villegas@univ-rouen.fr}}
+    \hspace{4pt}$|$\hspace{4pt}
+    \faMapMarker*\hspace{2pt}\texttt{Rouen, France}
+    \hspace{4pt}$|$\hspace{4pt}
+    \faLinkedinIn\hspace{2pt}%
+      \href{https://www.linkedin.com/in/vcastor}{\texttt{linkedin.com/in/vcastor}}
+    \newline
+    \faGithub\hspace{2pt}%
+      \href{https://github.com/vcastor}{\texttt{github.com/vcastor}}
+    \hspace{4pt}$|$\hspace{4pt}
+    \faGlobe\hspace{2pt}%
+      \href{https://vcastor.com}{\texttt{vcastor.com}}
+  \end{center}
+}
+
+% ---------------------------------------------------------------------------
+\begin{document}
+\pagestyle{empty}
+
+% Select hyphenation language
+\ifdefstring{\cvlang}{fr}{\selectlanguage{french}}{%
+\ifdefstring{\cvlang}{es}{\selectlanguage{spanish}}{\selectlanguage{english}}}
+
+\cvheader
+
+\input{plain/data/education_\cvlang}
+\input{plain/data/work_\cvlang}
+\nocite{*}
+\printbibliography[heading=cvbib, title={\pubtitle}]
+\input{plain/data/skills_\cvlang}
+\input{plain/data/languages_\cvlang}
+
+\end{document}

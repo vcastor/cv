@@ -1,0 +1,12 @@
+*.pdf
+*.aux
+*.log
+*.out
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.listing
+*.png
+*.svg
+*.claude*/*

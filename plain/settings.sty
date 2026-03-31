@@ -1,0 +1,100 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{settings}[2025/03/30 Plain CV settings — palin style]
+
+% --- Core packages ---------------------------------------------------------
+\RequirePackage{fontspec}
+\RequirePackage{microtype}
+\RequirePackage{geometry}
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\RequirePackage{titlesec}
+\RequirePackage{tabularx}
+\RequirePackage{fontawesome5}
+\RequirePackage{contour}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{hyperref}
+\RequirePackage{xcolor}
+
+% --- Fonts (LuaLaTeX / fontspec) ------------------------------------------
+\setmainfont{texgyreheros-regular.otf}[
+  BoldFont       = texgyreheros-bold.otf,
+  ItalicFont     = texgyreheros-italic.otf,
+  BoldItalicFont = texgyreheros-bolditalic.otf,
+  Ligatures      = TeX,
+]
+\setmonofont{FiraMono-Regular.otf}[
+  Scale    = 0.90,
+  BoldFont = FiraMono-Bold.otf,
+]
+
+% --- Page layout -----------------------------------------------------------
+\geometry{a4paper, left=1.27cm, right=1.27cm, top=1.27cm, bottom=1.27cm}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% --- Colours ---------------------------------------------------------------
+\definecolor{light-grey}{gray}{0.83}
+\definecolor{dark-grey}{gray}{0.30}
+\definecolor{text-grey}{gray}{0.08}
+
+\color{text-grey}
+
+% --- hyperref --------------------------------------------------------------
+\hypersetup{
+  colorlinks = false,
+  hidelinks,
+  pdfauthor  = {Victoria Castor Villegas},
+  pdftitle   = {Curriculum Vitae},
+}
+
+% --- Section headings: bold sans-serif + 2pt grey rule --------------------
+\titleformat{\section}{%
+  \bfseries\vspace{2pt}\raggedright\large
+}{}{0em}{}[\color{light-grey}{\titlerule[2pt]}\vspace{-4pt}]
+
+% --- Custom underline (avoids descenders) ----------------------------------
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}\llap{\contour{white}{#1}}%
+}
+
+% ---------------------------------------------------------------------------
+% Resume / CV commands
+% ---------------------------------------------------------------------------
+
+% \resumeItem{text}
+\newcommand{\resumeItem}[1]{%
+  \item\small{#1\vspace{-1pt}}%
+}
+
+% \resumeSubheading{Title}{Date}{Subtitle}{Location}
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{-1pt}\item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & {\color{dark-grey}\small #2}\vspace{1pt}\\
+    \textit{#3} & {\color{dark-grey}\small #4}\\
+  \end{tabular*}\vspace{-4pt}%
+}
+
+% \resumeProjectHeading{Title}{Date}
+\newcommand{\resumeProjectHeading}[2]{%
+  \vspace{-1pt}\item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    #1 & {\color{dark-grey}\small #2}\\
+  \end{tabular*}\vspace{-4pt}%
+}
+
+% List environments
+\newcommand{\resumeSubHeadingListStart}{%
+  \begin{itemize}[leftmargin=0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\resumeItemListStart}{%
+  \begin{itemize}[leftmargin=0.2in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{0pt}}
+
+% Compact bullet for nested lists
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
