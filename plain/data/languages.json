@@ -1,0 +1,29 @@
+{
+  "section": {"en": "LANGUAGES", "es": "IDIOMAS", "fr": "LANGUES"},
+  "entries": [
+    {
+      "label": {"en": "Spanish", "es": "Español", "fr": "Espagnol"},
+      "level": "C2"
+    },
+    {
+      "label": {"en": "English", "es": "Inglés", "fr": "Anglais"},
+      "level": "C2"
+    },
+    {
+      "label": {"en": "French", "es": "Francés", "fr": "Français"},
+      "level": "B2"
+    },
+    {
+      "label": {"en": "German", "es": "Alemán", "fr": "Allemand"},
+      "level": "A2"
+    },
+    {
+      "label": {"en": "Chinese", "es": "Chino", "fr": "Chinois"},
+      "level": "HSK\\,1"
+    },
+    {
+      "label": {"en": "Hebrew", "es": "Hebreo", "fr": "Hébreu"},
+      "level": "$\\aleph$"
+    }
+  ]
+}

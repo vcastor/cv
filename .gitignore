@@ -6,6 +6,7 @@
 *.blg
 *.run.xml
 *.listing
+plain/gen/
 *.png
 *.svg
 qrs/*

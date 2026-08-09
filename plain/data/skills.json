@@ -1,0 +1,41 @@
+{
+  "section": {"en": "SKILLS", "es": "HABILIDADES", "fr": "COMPÉTENCES"},
+  "categories": [
+    {
+      "label": {
+        "en": "Computational Chemistry",
+        "es": "Química Computacional",
+        "fr": "Chimie Computationnelle"
+      },
+      "items": "Amsterdam Modeling Suite (ADF, BAND, DFTB),\\ Gaussian,\\ AIMAll,\\ Orca,\\ LAMMPS"
+    },
+    {
+      "label": {
+        "en": "Programming \\& Software",
+        "es": "Programación y Software",
+        "fr": "Programmation et Logiciels"
+      },
+      "items": "UNIX/Linux,\\ Git/Subversion,\\ Fortran,\\ \\LaTeX,\\ Python ({\\footnotesize{sklearn \\& tensorflow}}),\\ SQL,\\ C,\\ C++,\\ Perl,\\ Cobol,\\ Julia,\\ JavaScript,\\ WebAssembly"
+    },
+    {
+      "label": {
+        "en": "Visualisation \\& Graphics",
+        "es": "Visualización y Gráficos",
+        "fr": "Visualisation et Infographie"
+      },
+      "items": "Inkscape,\\ GIMP,\\ Tcl/Tk,\\ Manim"
+    },
+    {
+      "label": {
+        "en": "Other",
+        "es": "Otros",
+        "fr": "Divers"
+      },
+      "items": {
+        "en": "Astrophysics,\\ First Aid",
+        "es": "Astrofísica,\\ Primeros Auxilios",
+        "fr": "Astrophysique,\\ Premiers Secours"
+      }
+    }
+  ]
+}

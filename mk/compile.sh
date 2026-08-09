@@ -12,7 +12,9 @@ CMD="${3:?command required}"
 TEXLOG="${4:-}"
 
 # ── spinner ────────────────────────────────────────────────────────────────
-printf "  \033[36m◉\033[0m  %-48s" "${LABEL}..."
+# pad by character count, not bytes (printf %-Ns miscounts UTF-8 labels)
+TEXT="${LABEL}..."
+printf "  \033[36m◉\033[0m  %s%*s" "${TEXT}" $((48 - ${#TEXT})) ""
 
 eval "${CMD}" >> "${LOGFILE}" 2>&1 &
 PID=$!

@@ -1,0 +1,84 @@
+{
+  "section": {"en": "EDUCATION", "es": "EDUCACIÓN", "fr": "FORMATION"},
+  "entries": [
+    {
+      "title": {
+        "en": "PhD in Chemistry",
+        "es": "Doctorado en Química",
+        "fr": "Doctorat en Chimie"
+      },
+      "dates": "Oct 2022 -- Oct 2025",
+      "institution": {
+        "en": "University of Rouen Normandy",
+        "es": "Universidad de Ruán Normandía",
+        "fr": "Université de Rouen Normandie"
+      },
+      "location": {
+        "en": "Rouen, France",
+        "es": "Ruán, Francia",
+        "fr": "Rouen, France"
+      },
+      "items": [
+        {
+          "en": "Thesis: \\emph{Chemical Reactivity in Solution from a Hybrid Conceptual DFT and QTAIM Approach}",
+          "es": "Tesis: \\emph{Reactividad química en solución desde un enfoque híbrido de DFT conceptual y QTAIM}",
+          "fr": "Thèse~: \\emph{Réactivité chimique en solution par une approche hybride DFT conceptuelle et QTAIM}"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "MSc\\ Theoretical Chemistry and Computational Modelling",
+        "es": "Master en Química Teórica y Modelización Computacional",
+        "fr": "Master en Chimie Théorique et Modélisation Computationnelle"
+      },
+      "dates": "Sep 2020 -- Jul 2022",
+      "institution": {
+        "en": "Autonomous University of Madrid",
+        "es": "Universidad Autónoma de Madrid",
+        "fr": "Université Autonome de Madrid"
+      },
+      "location": {
+        "en": "Madrid, Spain",
+        "es": "Madrid, España",
+        "fr": "Madrid, Espagne"
+      },
+      "items": [
+        {
+          "en": "Thesis: \\emph{Hydrogen Bonds in Water Clusters from an ELF Perspective}",
+          "es": "Tesis: \\emph{Enlaces de hidrógeno en clústeres de agua desde una perspectiva ELF}",
+          "fr": "Mémoire~: \\emph{Liaisons hydrogène dans les agrégats d'eau dans une perspective ELF}"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "BSc\\ Chemistry",
+        "es": "Licenciatura en Química",
+        "fr": "Licence en Chimie"
+      },
+      "dates": {
+        "en": "Aug 2016 -- Jul 2020",
+        "es": "Ago 2016 -- Jul 2020",
+        "fr": "Aoû 2016 -- Jul 2020"
+      },
+      "institution": {
+        "en": "National Autonomous University of Mexico",
+        "es": "Universidad Nacional Autónoma de México",
+        "fr": "Université Nationale Autonome du Mexique"
+      },
+      "location": {
+        "en": "Mexico City, Mexico",
+        "es": "Ciudad de México, México",
+        "fr": "Mexico, Mexique"
+      },
+      "items": [
+        {
+          "en": "Thesis: \\emph{Topological Studies of the Electronic Density in Water Clusters}",
+          "es": "Tesis: \\emph{Estudios topológicos de la densidad electrónica en clústeres de agua}",
+          "fr": "Mémoire~: \\emph{Études topologiques de la densité électronique dans les agrégats d'eau}"
+        }
+      ]
+    }
+  ]
+}

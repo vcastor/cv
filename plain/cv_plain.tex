@@ -6,25 +6,15 @@
 \usepackage{settings}
 \usepackage[french,spanish,english]{babel}
 
-% --- Publications (natbib + bibtex) ----------------------------------------
-\usepackage{natbib}
-\bibliographystyle{unsrtnatnodoi}
-
-% Publication section title — only ES differs from EN/FR
-\ifdefstring{\cvlang}{es}{\def\pubtitle{PUBLICACIONES}}{\def\pubtitle{PUBLICATIONS}}
-
-% Make the bibliography heading match our \section style (no star, correct title)
-\renewcommand{\bibsection}{\section{\pubtitle}}
-
 % ---------------------------------------------------------------------------
 % Header
 % ---------------------------------------------------------------------------
-\newcommand{\cvheader}{%
+\newcommand{\cvheader}{
   \begin{center}
     {\Huge\textbf{Victoria Castor Villegas}}\\[5pt]
     \small
     \faEnvelope\hspace{2pt}%
-      \href{mailto:victoria.castor-villegas@univ-rouen.fr}%
+      \href{mailto:victoria.castor-villegas@univ-rouen.fr}
            {\texttt{victoria.castor-villegas@univ-rouen.fr}}
     \hspace{4pt}$|$\hspace{4pt}
     \faMapMarker*\hspace{2pt}\texttt{Rouen, France}
@@ -45,16 +35,11 @@
 \pagestyle{empty}
 
 % Select hyphenation language
-\ifdefstring{\cvlang}{fr}{\selectlanguage{french}}{%
+\ifdefstring{\cvlang}{fr}{\selectlanguage{french}}{
 \ifdefstring{\cvlang}{es}{\selectlanguage{spanish}}{\selectlanguage{english}}}
 
 \cvheader
 
-\input{plain/data/education_\cvlang}
-\input{plain/data/work_\cvlang}
-\nocite{*}
-\bibliography{plain/data/own-bib}
-\input{plain/data/skills_\cvlang}
-\input{plain/data/languages_\cvlang}
+\input{plain/gen/body_\cvlang}
 
 \end{document}

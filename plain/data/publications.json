@@ -1,0 +1,21 @@
+{
+  "section": {"en": "PUBLICATIONS", "es": "PUBLICACIONES", "fr": "PUBLICATIONS"},
+  "entries": [
+    {
+      "authors": "V. Castor-Villegas, José Manuel Guevara-Vela, Wilmer E. Vallejo Narváez, Ángel Martín Pendás, Tomás Rocha-Rinza, and Alberto Fernández-Alarcón",
+      "title": "On the strength of hydrogen bonding within water clusters on the coordination limit",
+      "journal": "Journal of Computational Chemistry",
+      "year": 2020,
+      "url": "https://doi.org/10.1002/jcc.26391"
+    },
+    {
+      "authors": "V. Castor-Villegas, Vincent Tognetti, and Laurent Joubert",
+      "title": "On the prediction by density functional theory of entropies in solution within implicit solvation models",
+      "journal": "Journal of Molecular Modeling",
+      "volume": "31",
+      "number": "1",
+      "year": 2024,
+      "url": "https://doi.org/10.1007/s00894-024-06225-3"
+    }
+  ]
+}

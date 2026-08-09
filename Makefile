@@ -1,9 +1,10 @@
 SHELL     := /bin/bash
 LATEX     := lualatex
-BIBTEX    := bibtex
 FLAGS     := -interaction=nonstopmode -halt-on-error
 LOGDIR    := logs
 PLAIN_DIR := plain
+GEN_DIR   := $(PLAIN_DIR)/gen
+GEN       := /usr/bin/perl mk/gen.pl
 SPIN      := ./mk/compile.sh
 
 # TEXINPUTS for plain CV — finds settings.sty inside plain/
@@ -13,25 +14,26 @@ TEX_PLAIN := TEXINPUTS=./$(PLAIN_DIR):
 # Shorthand:  make logs
 LOGS ?= 0
 
+# ----- Languages -----------------------------------------------------------
+LANGS := en es fr
+LANGNAME_en := English
+LANGNAME_es := Español
+LANGNAME_fr := Français
+
 # ----- Output PDFs ---------------------------------------------------------
-DARK_PDF  := cv_dark.pdf
-LIGHT_PDF := cv_light.pdf
-PLAIN_EN  := cv_plain_en.pdf
-PLAIN_ES  := cv_plain_es.pdf
-PLAIN_FR  := cv_plain_fr.pdf
+DARK_PDF   := cv_dark.pdf
+LIGHT_PDF  := cv_light.pdf
+PLAIN_PDFS := $(LANGS:%=cv_plain_%.pdf)
 
-COOL_PDFS  := $(DARK_PDF) $(LIGHT_PDF)
-PLAIN_PDFS := $(PLAIN_EN) $(PLAIN_ES) $(PLAIN_FR)
-ALL_PDFS   := $(COOL_PDFS) $(PLAIN_PDFS)
+COOL_PDFS := $(DARK_PDF) $(LIGHT_PDF)
+ALL_PDFS  := $(COOL_PDFS) $(PLAIN_PDFS)
 
-PLAIN_DEPS := $(PLAIN_DIR)/cv_plain.tex $(PLAIN_DIR)/settings.sty \
-              unsrtnatnodoi.bst \
-              $(wildcard $(PLAIN_DIR)/data/*.tex) \
-              $(wildcard $(PLAIN_DIR)/data/*.bib)
+JSON_DATA  := $(wildcard $(PLAIN_DIR)/data/*.json)
+PLAIN_DEPS := $(PLAIN_DIR)/cv_plain.tex $(PLAIN_DIR)/settings.sty
 
 # ----- Cleanup helpers -----------------------------------------------------
 # Aux/ancillary files per jobname
-_aux = $(1).aux $(1).out $(1).bbl $(1).blg $(1).listing
+_aux = $(1).aux $(1).out $(1).listing
 
 # Conditionally wipe log files (skipped when LOGS=1)
 define _clean_logs
@@ -39,11 +41,13 @@ define _clean_logs
 endef
 
 # ----- Phony targets -------------------------------------------------------
-.PHONY: all dark light plain plain-en plain-es plain-fr logs clean
+.PHONY: all dark light plain logs clean $(LANGS:%=plain-%)
+
+# keep generated bodies: they drive the per-language rebuild logic
+.SECONDARY: $(LANGS:%=$(GEN_DIR)/body_%.tex)
 
 all: $(ALL_PDFS)
-	@rm -f $(call _aux,cv_dark) $(call _aux,cv_light) \
-	       $(call _aux,cv_plain_en) $(call _aux,cv_plain_es) $(call _aux,cv_plain_fr)
+	@rm -f $(foreach j,cv_dark cv_light $(LANGS:%=cv_plain_%),$(call _aux,$(j)))
 	@[ "$(LOGS)" = "1" ] || { rm -f *.log; rm -rf $(LOGDIR); }
 	@printf "\n  \033[32mAll CVs compiled successfully.\033[0m\n\n"
 
@@ -57,21 +61,11 @@ light: $(LIGHT_PDF)
 	$(call _clean_logs,cv_light,light.log)
 	@[ "$(LOGS)" = "1" ] || rm -rf $(LOGDIR)
 
-plain: plain-en plain-es plain-fr
+plain: $(LANGS:%=plain-%)
 
-plain-en: $(PLAIN_EN)
-	@rm -f $(call _aux,cv_plain_en)
-	$(call _clean_logs,cv_plain_en,plain_en.log)
-	@[ "$(LOGS)" = "1" ] || rm -rf $(LOGDIR)
-
-plain-es: $(PLAIN_ES)
-	@rm -f $(call _aux,cv_plain_es)
-	$(call _clean_logs,cv_plain_es,plain_es.log)
-	@[ "$(LOGS)" = "1" ] || rm -rf $(LOGDIR)
-
-plain-fr: $(PLAIN_FR)
-	@rm -f $(call _aux,cv_plain_fr)
-	$(call _clean_logs,cv_plain_fr,plain_fr.log)
+$(LANGS:%=plain-%): plain-%: cv_plain_%.pdf
+	@rm -f $(call _aux,cv_plain_$*)
+	$(call _clean_logs,cv_plain_$*,plain_$*.log)
 	@[ "$(LOGS)" = "1" ] || rm -rf $(LOGDIR)
 
 # Keep logs — shorthand for: make LOGS=1 all
@@ -92,37 +86,20 @@ $(LIGHT_PDF): light.tex
 	  "$(LATEX) $(FLAGS) -jobname=cv_light light.tex" \
 	  "cv_light.log"
 
-# ----- Plain CVs (lualatex → bibtex → lualatex × 2) ----------------------
-$(PLAIN_EN): $(PLAIN_DEPS)
-	@mkdir -p $(LOGDIR)
-	@$(SPIN) "Plain CV [English]" "$(LOGDIR)/plain_en.log" \
-	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBTEX) cv_plain_en \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_en '\def\cvlang{en}\input{$(PLAIN_DIR)/cv_plain}'" \
-	  "cv_plain_en.log"
+# ----- Plain CVs -----------------------------------------------------------
+# gen.pl only rewrites body_<lang>.tex when its content changed, so a JSON
+# edit touching one language recompiles only that language's PDF.
+$(GEN_DIR)/body_%.tex: $(JSON_DATA) mk/gen.pl
+	@$(GEN) $*
 
-$(PLAIN_ES): $(PLAIN_DEPS)
+cv_plain_%.pdf: $(GEN_DIR)/body_%.tex $(PLAIN_DEPS)
 	@mkdir -p $(LOGDIR)
-	@$(SPIN) "Plain CV [Español]" "$(LOGDIR)/plain_es.log" \
-	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBTEX) cv_plain_es \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_es '\def\cvlang{es}\input{$(PLAIN_DIR)/cv_plain}'" \
-	  "cv_plain_es.log"
+	@$(SPIN) "Plain CV [$(LANGNAME_$*)]" "$(LOGDIR)/plain_$*.log" \
+	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_$* '\def\cvlang{$*}\input{$(PLAIN_DIR)/cv_plain}'" \
+	  "cv_plain_$*.log"
 
-$(PLAIN_FR): $(PLAIN_DEPS)
-	@mkdir -p $(LOGDIR)
-	@$(SPIN) "Plain CV [Français]" "$(LOGDIR)/plain_fr.log" \
-	  "$(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(BIBTEX) cv_plain_fr \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}' \
-	   && $(TEX_PLAIN) $(LATEX) $(FLAGS) -jobname=cv_plain_fr '\def\cvlang{fr}\input{$(PLAIN_DIR)/cv_plain}'" \
-	  "cv_plain_fr.log"
-
-# ----- Clean (removes everything except PDF) ---------------------------
+# ----- Clean (removes everything except PDF) -------------------------------
 clean:
-	@printf "  Removing all build artefacts... "
 	@rm -f *.aux *.log *.out *.bbl *.blg *.listing
-	@rm -rf $(LOGDIR)
+	@rm -rf $(LOGDIR) $(GEN_DIR)
 	@printf "\033[32m✓\033[0m\n"

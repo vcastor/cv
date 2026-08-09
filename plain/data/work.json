@@ -1,0 +1,34 @@
+{
+  "section": {"en": "WORK", "es": "EXPERIENCIA", "fr": "EXPÉRIENCE"},
+  "entries": [
+    {
+      "title": {
+        "en": "Postdoc",
+        "es": "Postdoctorado",
+        "fr": "Post-doctorat"
+      },
+      "dates": {
+        "en": "Dec 2025 -- Present",
+        "es": "Dic 2025 -- Presente",
+        "fr": "Déc 2025 -- Présent"
+      },
+      "institution": {
+        "en": "University of Rouen Normandy",
+        "es": "Universidad de Ruán Normandía",
+        "fr": "Université de Rouen Normandie"
+      },
+      "location": {
+        "en": "Rouen, France",
+        "es": "Ruán, Francia",
+        "fr": "Rouen, France"
+      },
+      "items": [
+        {
+          "en": "Research: \\emph{Quantum-Chemical Modelling of NMR and Reactivity from Molecular Dynamics and Topological Analysis}",
+          "es": "Investigación: \\emph{Modelización cuántica de RMN y reactividad a partir de dinámica molecular y análisis topológico}",
+          "fr": "Recherche~: \\emph{Modélisation en chimie quantique de la RMN et de la réactivité à partir de dynamique moléculaire et d'analyse topologique}"
+        }
+      ]
+    }
+  ]
+}
