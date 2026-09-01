@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # mk/compile.sh — compile a LaTeX document with a spinner
 # Usage: compile.sh LABEL LOGFILE CMD [TEXLOG]
 #   LABEL   : human-readable label for the progress line
@@ -47,3 +47,4 @@ if [ -n "${TEXLOG}" ] && [ -f "${TEXLOG}" ]; then
 fi
 printf "\n"
 exit 1
+

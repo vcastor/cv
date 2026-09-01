@@ -49,7 +49,11 @@
   pdftitle   = {Curriculum Vitae},
 }
 
+\setlist{topsep=0pt, partopsep=0pt}
+
 % --- Section headings: bold sans-serif + 2pt grey rule --------------------
+\titlespacing*{\section}{0pt}{12pt}{2.3ex}
+
 \titleformat{\section}{%
   \bfseries\vspace{2pt}\raggedright\large
 }{}{0em}{}[\color{light-grey}{\titlerule[2pt]}\vspace{-4pt}]
@@ -86,6 +90,18 @@
     #1 & {\color{dark-grey}\small #2}\\
   \end{tabular*}\vspace{-4pt}%
 }
+
+% Publications: break before the section, group heading, entry note
+\newcommand{\pubbreak}{}
+\newcommand{\pubgroup}[1]{%
+  \vspace{4pt}\textbf{\small #1}\par\vspace{2pt}%
+}
+\newcommand{\pubnote}[1]{%
+  \\{\color{dark-grey}\footnotesize #1}%
+}
+
+% Gap between the end of a section and the next heading
+\newcommand{\sectiongap}{\vspace{-2pt}}
 
 % List environments
 \newcommand{\resumeSubHeadingListStart}{%

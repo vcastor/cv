@@ -13,6 +13,7 @@ use File::Basename qw(dirname);
 
 chdir dirname(__FILE__) . '/..' or die "chdir: $!";
 
+my $ME   = 'V. Castor-Villegas';
 my $DATA = 'plain/data';
 my $OUT  = 'plain/gen';
 my @langs = @ARGV ? @ARGV : qw(en es fr);
@@ -57,17 +58,28 @@ sub headings_section {
 
 sub publications_section {
   my ($db, $lang) = @_;
-  my $tex = "\\section{" . L($db->{section}, $lang) . "}\n";
-  $tex .= "\\begin{enumerate}[leftmargin=0.2in]\n  \\small\n";
-  for my $p (@{$db->{entries}}) {
-    my $title = $p->{url} ? "\\href{$p->{url}}{$p->{title}}" : $p->{title};
-    my $ref = "\\emph{$p->{journal}}";
-    $ref .= " $p->{volume}"   if $p->{volume};
-    $ref .= "($p->{number})"  if $p->{number};
-    $ref .= ", $p->{year}";
-    $tex .= "  \\item $p->{authors}. $title. $ref.\n";
+  my $tex = "\\pubbreak\n\\section{" . L($db->{section}, $lang) . "}\n";
+  my $resume = "";
+  for my $g (@{$db->{groups}}) {
+    $tex .= "\\pubgroup{" . L($g->{label}, $lang) . "}\n";
+    $tex .= "\\begin{enumerate}[leftmargin=0.2in$resume]\n  \\small\n";
+    for my $p (@{$g->{entries}}) {
+      my $title = $p->{url} ? "\\href{$p->{url}}{$p->{title}}" : $p->{title};
+      (my $authors = $p->{authors}) =~ s/\Q$ME\E/\\textbf{$ME}/;
+      $tex .= "  \\item $authors. $title.";
+      if ($p->{journal}) {
+        my $ref = "\\emph{$p->{journal}}";
+        $ref .= " $p->{volume}"   if $p->{volume};
+        $ref .= "($p->{number})"  if $p->{number};
+        $ref .= ", $p->{year}";
+        $tex .= " $ref.";
+      }
+      $tex .= " \\pubnote{$p->{note}}" if $p->{note} && $lang eq 'en';
+      $tex .= "\n";
+    }
+    $tex .= "\\end{enumerate}\n";
+    $resume = ", resume";
   }
-  $tex .= "\\end{enumerate}\n";
   return $tex;
 }
 
@@ -112,11 +124,12 @@ sub write_if_changed {
 }
 
 for my $lang (@langs) {
-  my $body = join "\n",
+  my $body = join "\n", map { "$_\\sectiongap\n" }
     headings_section($DB{education}, $lang),
     headings_section($DB{work}, $lang),
-    publications_section($DB{publications}, $lang),
     skills_section($DB{skills}, $lang),
-    languages_section($DB{languages}, $lang);
+    languages_section($DB{languages}, $lang),
+    publications_section($DB{publications}, $lang);
   write_if_changed("$OUT/body_$lang.tex", $body);
 }
+

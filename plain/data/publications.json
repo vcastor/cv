@@ -1,21 +1,52 @@
 {
   "section": {"en": "PUBLICATIONS", "es": "PUBLICACIONES", "fr": "PUBLICATIONS"},
-  "entries": [
+  "groups": [
     {
-      "authors": "V. Castor-Villegas, José Manuel Guevara-Vela, Wilmer E. Vallejo Narváez, Ángel Martín Pendás, Tomás Rocha-Rinza, and Alberto Fernández-Alarcón",
-      "title": "On the strength of hydrogen bonding within water clusters on the coordination limit",
-      "journal": "Journal of Computational Chemistry",
-      "year": 2020,
-      "url": "https://doi.org/10.1002/jcc.26391"
+      "label": {"en": "Published", "es": "Publicados", "fr": "Publiés"},
+      "entries": [
+        {
+          "authors": "V. Castor-Villegas, José Manuel Guevara-Vela, Wilmer E. Vallejo Narváez, Ángel Martín Pendás, Tomás Rocha-Rinza, and Alberto Fernández-Alarcón",
+          "title": "On the strength of hydrogen bonding within water clusters on the coordination limit",
+          "journal": "Journal of Computational Chemistry",
+          "volume": "42",
+          "year": 2020,
+          "url": "https://doi.org/10.1002/jcc.26391"
+        },
+        {
+          "authors": "V. Castor-Villegas, Vincent Tognetti, and Laurent Joubert",
+          "title": "On the prediction by density functional theory of entropies in solution within implicit solvation models",
+          "journal": "Journal of Molecular Modeling",
+          "volume": "31",
+          "number": "1",
+          "year": 2024,
+          "url": "https://doi.org/10.1007/s00894-024-06225-3"
+        }
+      ]
     },
     {
-      "authors": "V. Castor-Villegas, Vincent Tognetti, and Laurent Joubert",
-      "title": "On the prediction by density functional theory of entropies in solution within implicit solvation models",
-      "journal": "Journal of Molecular Modeling",
-      "volume": "31",
-      "number": "1",
-      "year": 2024,
-      "url": "https://doi.org/10.1007/s00894-024-06225-3"
+      "label": {"en": "In preparation", "es": "En preparación", "fr": "En préparation"},
+      "entries": [
+        {
+          "authors": "T. Potez, V. Castor-Villegas, M. Hedouin, F. M. Perna, J. Maddaluno, M. Durandetti, V. Capriati, V. Tognetti, and H. Oulyadi",
+          "title": "NMR and molecular dynamics reveal an unexpected hydrogen bond lattice structuring the reline DES network",
+          "note": "Ongoing postdoctoral work: joint NMR and molecular-dynamics study of deep eutectic solvents."
+        },
+        {
+          "authors": "V. Castor-Villegas, Vincent Tognetti, and Laurent Joubert",
+          "title": "On the prediction of Mayr's nitrogen nucleophilicity parameter by a mixed conceptual density functional theory and atoms-in-molecules approach",
+          "note": "PhD thesis chapter; submission deferred by the thesis-defence timeline, now being finalised."
+        },
+        {
+          "authors": "V. Castor-Villegas, Vincent Tognetti, and Laurent Joubert",
+          "title": "A new implementation of QTAIM topology in AMS (ADF, BAND, DFTB)",
+          "note": "PhD thesis chapter extended with post-thesis developments (IQA with ELF) to gather all contributions."
+        },
+        {
+          "authors": "K. Zator, X. Wang, V. Castor-Villegas, and Julia Contreras-García",
+          "title": "Neural networks for IQA-ELF energy calculations in water clusters",
+          "note": "Built on the data set of my M.Sc. thesis; neural-network analysis and extension by K. Zator and X. Wang."
+        }
+      ]
     }
   ]
 }
