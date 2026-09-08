@@ -90,7 +90,8 @@ sub skills_section {
   my @cats = @{$db->{categories}};
   for my $i (0 .. $#cats) {
     my $c = $cats[$i];
-    $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
+    # $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
+    $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}:\\hspace{4pt}"
           . L($c->{items}, $lang);
     $tex .= "\n      \\vspace{2pt}\\\\" if $i < $#cats;
     $tex .= "\n";
@@ -106,7 +107,8 @@ sub languages_section {
   my @e = @{$db->{entries}};
   for my $i (0 .. $#e) {
     my $sep = $i < $#e ? "\\hspace{12pt}" : "";
-    $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
+    # $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
+    $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}:\\hspace{4pt}"
           . "$e[$i]{level}$sep\n";
   }
   $tex .= "  }}\n\\end{itemize}\n";
