@@ -31,6 +31,12 @@ my $json = JSON::PP->new->utf8;
 my %DB = map { $_ => $json->decode(slurp("$DATA/$_.json")) }
          qw(education work publications skills languages);
 
+# French typography puts a thin space before the colon.
+sub C {
+  my ($lang) = @_;
+  return $lang eq "fr" ? "\\hspace{2pt}:\\hspace{4pt}" : ":\\hspace{4pt}";
+}
+
 # Pick the string for a language: plain strings are shared by all languages,
 # hashes are {en => ..., es => ..., fr => ...}
 sub L {
@@ -90,8 +96,7 @@ sub skills_section {
   my @cats = @{$db->{categories}};
   for my $i (0 .. $#cats) {
     my $c = $cats[$i];
-    # $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
-    $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}:\\hspace{4pt}"
+    $tex .= "    \\textbf{" . L($c->{label}, $lang) . "}" . C($lang)
           . L($c->{items}, $lang);
     $tex .= "\n      \\vspace{2pt}\\\\" if $i < $#cats;
     $tex .= "\n";
@@ -107,8 +112,7 @@ sub languages_section {
   my @e = @{$db->{entries}};
   for my $i (0 .. $#e) {
     my $sep = $i < $#e ? "\\hspace{12pt}" : "";
-    # $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}\\hspace{2pt}:\\hspace{4pt}"
-    $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}:\\hspace{4pt}"
+    $tex .= "    \\textbf{" . L($e[$i]{label}, $lang) . "}" . C($lang)
           . "$e[$i]{level}$sep\n";
   }
   $tex .= "  }}\n\\end{itemize}\n";
