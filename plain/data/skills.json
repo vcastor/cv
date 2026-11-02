@@ -15,7 +15,7 @@
         "es": "Programación y Software",
         "fr": "Programmation et Logiciels"
       },
-      "items": "UNIX/Linux,\\ Git/Subversion,\\ Fortran,\\ \\LaTeX,\\ Python ({\\footnotesize{sklearn \\& tensorflow}}),\\ SQL,\\ C,\\ C++,\\ Perl,\\ Cobol,\\ Julia,\\ JavaScript,\\ WebAssembly"
+      "items": "Fortran,\\ \\LaTeX,\\ UNIX/Linux,\\ Python + ML ({\\scriptsize{sklearn \\& tensorflow}}),\\ git/Subversion,\\ SQL,\\ C++,\\ C,\\ Perl,\\ Julia,\\ JavaScript,\\ Cobol,\\ WebAssembly"
     },
     {
       "label": {
@@ -32,9 +32,9 @@
         "fr": "Divers"
       },
       "items": {
-        "en": "Astrophysics,\\ First Aid",
-        "es": "Astrofísica,\\ Primeros Auxilios",
-        "fr": "Astrophysique,\\ Premiers Secours"
+        "en": "Astrophysics",
+        "es": "Astrofísica",
+        "fr": "Astrophysique"
       }
     }
   ]
